@@ -11,6 +11,7 @@ renderer.SetActiveCamera(camera);
  
 renderWindow =vtkRenderWindow();
 renderWindow.AddRenderer(renderer);
+
 renderWindowInteractor =vtkRenderWindowInteractor();
 renderWindowInteractor.SetRenderWindow(renderWindow);
 
@@ -18,26 +19,46 @@ renderer.SetBackground(1,1,1); # Background
 
 
 
-# *****read obj file 
-reader = vtkOBJReader();
+# # Read in Iron Man
+# reader = vtkOBJReader();
+# filename = "./ironman.obj";
+# reader.SetFileName(filename);
+# reader.Update();
+
+# # put obj file data to mapper
+# objFile = vtkPolyDataMapper();
+# objFile.SetInputConnection(reader.GetOutputPort());
+
+# # put mapper into an actor
+# objActor = vtkActor();
+# objActor.SetMapper(objFile);
+# objActor.GetProperty().SetColor(1.0,1.0, 0.0);
+
+# # render the obj Actor
+# renderer.AddActor(objActor);
+
+# ******************************** Read obj file 
+reader1 = vtkOBJReader();
 filename = "./vanquish.obj";
-reader.SetFileName(filename);
-reader.Update();
+reader1.SetFileName(filename);
+reader1.Update();
 
 # put obj file data to mapper
-objFile = vtkPolyDataMapper();
-objFile.SetInputConnection(reader.GetOutputPort());
+objFile1 = vtkPolyDataMapper();
+objFile1.SetInputConnection(reader1.GetOutputPort());
 
 # put mapper into an actor
-objActor = vtkActor();
-objActor.SetMapper(objFile);
+objActor1 = vtkActor();
+objActor1.SetPosition(0.0,0.9,0.0);
+objActor1.GetProperty().SetColor(255,255, 255);
+objActor1.SetMapper(objFile1);
 
 # render the obj Actor
-renderer.AddActor(objActor);
+renderer.AddActor(objActor1);
 
 
 
-#*********Create a sphere
+# ******************************* Create a sphere
 sphereSource =vtkSphereSource();
 sphereSource.SetCenter(0.0, 0.0, 0.0);
 sphereSource.SetRadius(1);
@@ -56,11 +77,19 @@ renderer.AddActor(sphere_actor);
 
 
 
-
+#******************************  Add the axes
 axes = vtkAxesActor();
 axes.SetTotalLength(2,2,2);
 
+transform = vtkTransform();
+transform.Translate(2.0, 0.0, 0.0);
+axes.SetUserTransform(transform);
+
 renderer.AddActor(axes);
+
+light = vtkLight();
+light.SetColor(1.0, 0.0, 0.0);
+renderer.AddLight(light);
 
 
 
