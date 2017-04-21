@@ -31,8 +31,9 @@ renderer.SetBackground(1,1,1); # Background
 
 # # put mapper into an actor
 # objActor = vtkActor();
+# objActor1.SetPosition(10,0.0,0.0);
 # objActor.SetMapper(objFile);
-# objActor.GetProperty().SetColor(1.0,1.0, 0.0);
+
 
 # # render the obj Actor
 # renderer.AddActor(objActor);
